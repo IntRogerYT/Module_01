@@ -4,21 +4,17 @@ class SecurePlant:
     def __init__(self, name: str) -> None:
         """
         Initialize a new plant instance.
-        Args:
+
         :param self: The instance of the class used in this method.
         :param name: The name of the plant.
+        :type name: str
         """
 
         self.name: str = name
         self.__height: int = 0
         self.__age: int = 0
         print(f"Plant created: {name}")
-        """
-        Args:
-        - name (str): The name of the plant.
-        - height (int): Height in centimeters.
-        - age (int): Age in days.
-        """
+
     def set_height(self, value: int) -> None:
         """
         Method for setting the height of plants
@@ -27,14 +23,12 @@ class SecurePlant:
         :param value: The height you want to set
         :type value: int
         """
-        try:
-            if value < 0:
-                raise ValueError(f"Height {value}cm [REJECTED]")
+        if value < 0:
+            print(f"Invalid operation attempted: Height {value}cm [REJECTED]")
+            print("Security: Negative height rejected")
+        else:
             self.__height = value
             print(f"Height updated: {value}cm [OK]")
-        except ValueError as e:
-            print(f"Invalid operation attempted: {e}")
-            print("Security: Negative height rejected")
 
     def set_age(self, value: int) -> None:
         """
@@ -44,14 +38,13 @@ class SecurePlant:
         :param value: The age you want to set
         :type value: int
         """
-        try:
-            if value < 0:
-                raise ValueError(f"Age {value} days [REJECTED]")
+
+        if value < 0:
+            print(f"Invalid operation attempted: Age {value} days [REJECTED]")
+            print("Security: Negative age rejected")
+        else:
             self.__age = value
             print(f"Age updated: {value} days [OK]")
-        except ValueError as e:
-            print(f"Invalid operation attempted: {e}")
-            print("Security: Negative age rejected")
 
     def get_info(self) -> None:
         """Display the plant's information."""
