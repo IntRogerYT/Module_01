@@ -1,109 +1,90 @@
 class Plant:
-    """Class that represents a plant from a Garden"""
-
-    def __init__(self, name: str, height: int, age: int) -> None:
-        """
-        Initialize a new plant instance.
-
-        :param self: The instance of the class used in this method.
-        :param name: The name of the plant.
-        :type name: str
-        :param height: The height of the plant.
-        :type height: int
-        :param age: The age of the plant.
-        :type age: int
-        """
+    def __init__(self, name: str, height: float, age: int) -> None:
         self.name: str = name
-        self.height: int = height
+        self.height: float = height
         self.age: int = age
+
+    def display_info(self) -> None:
+        print(f"{self.name}: {self.height}cm, {self.age} days old")
 
 
 class Flower(Plant):
-    """Subclass representing a flower-type plant"""
-    def __init__(self, name: str, height: int, age: int, color: str):
-        """
-        Initialize a new flower type plant instance.
-
-        :param self: The instance of the class used in this method.
-        :param name: The name of the flower.
-        :type name: str
-        :param height: The height of the flower.
-        :type height: int
-        :param age: The age of the flower.
-        :type age: int
-        :param color: The color of the flower.
-        :type color: str
-        """
+    def __init__(self, name: str, height: float, age: int, color: str) -> None:
         super().__init__(name, height, age)
         self.color: str = color
-        print(f"{name} (Flower): {self.height}cm, "
-              f"{self.age} days, {self.color} color")
+        self.is_blooming: bool = False
 
-    def bloom(self):
-        """method for making the flower bloom"""
-        print(f"{self.name} is blooming beautifully!")
+    def bloom(self) -> None:
+        self.is_blooming = True
+
+    def show(self) -> None:
+        print(f"{self.name}: {round(self.height, 1)}cm, {self.age} days old")
+        print(f" Color: {self.color}")
+        if self.is_blooming:
+            print(f" {self.name} is blooming beautifully!")
+        else:
+            print(f" {self.name} has not bloomed yet")
 
 
 class Tree(Plant):
-    """subclass representing a tree-type plant"""
-    def __init__(self, name: str, height: int, age: int, trunk_diameter: int):
-        """
-        Initialize a new tree-type plant instance.
-
-        :param self: The instance of the class used in this method.
-        :param name: The name of the tree.
-        :type name: str
-        :param height: The height of the tree.
-        :type height: int
-        :param age: The age of the tree.
-        :type age: int
-        :param color: The color of the tree.
-        :type color: str
-        """
+    def __init__(self, name: str, height: float, age: int,
+                 trunk_diameter: float) -> None:
         super().__init__(name, height, age)
-        self.trunk_diameter: int = trunk_diameter
-        print(f"{name} (Tree): {self.height}cm, "
-              f"{self.age} days, {self.trunk_diameter}cm diameter")
+        self.trunk_diameter: float = trunk_diameter
 
-    def produce_shade(self):
-        """Method for the tree to produce shade."""
-        print(f"{self.name} provides 78 square meters of shade")
+    def produce_shade(self) -> None:
+        print(f"Tree {self.name} now produces a shade of "
+              f"{round(self.trunk_diameter * 40.0, 1)}cm long and "
+              f"{round(self.trunk_diameter, 1)}cm wide.")
+
+    def show(self) -> None:
+        print(f"{self.name}: {round(self.height, 1)}cm, {self.age} days old")
+        print(f"Trunk diameter: {round(self.trunk_diameter, 1)}cm")
 
 
 class Vegetable(Plant):
-    """subclass representing a vegetable-type plant"""
-    def __init__(self, name: str, height: int, age: int, harvest_season: str):
-        """
-        Initialize a new vegetable-type plant instance.
-
-        :param self: The instance of the class used in this method.
-        :param name: The name of the vegetable.
-        :type name: str
-        :param height: The height of the vegetable.
-        :type height: int
-        :param age: The age of the vegetable.
-        :type age: int
-        :param harvest_season: The harvest season of the vegetable.
-        :type harvest_season: str
-        """
+    def __init__(self, name: str, height: float, age: int,
+                 harvest_season: str) -> None:
         super().__init__(name, height, age)
         self.harvest_season: str = harvest_season
-        print(f"{name} (Vegetable): {self.height}cm, "
-              f"{self.age} days, {self.harvest_season} harvest")
+        self.nutritional_value: int = 0
 
-    def nutritional_value(self):
-        """Method for vegetable to see it's nutritional value"""
-        print(f"{self.name} is rich in vitamin C")
+    def grow(self, days: int) -> None:
+        self.age += days
+        self.height += days * 2.1
+        self.nutritional_value += days
+
+    def show(self) -> None:
+        print(f"{self.name}: {round(self.height, 1)}cm, {self.age} days old")
+        print(f" Harvest season: {self.harvest_season}")
+        print(f" Nutritional value: {self.nutritional_value}")
+
+
+def main() -> None:
+    print("=== Garden Plant Types ===")
+
+    print("=== Flower")
+    rose = Flower("Rose", 15.0, 10, "red")
+    rose.show()
+    print("[asking the rose to bloom]")
+    rose.bloom()
+    rose.show()
+
+    print()
+    print("=== Tree")
+    oak = Tree("Oak", 200.0, 365, 5.0)
+    oak.show()
+    print("[asking the oak to produce shade]")
+    oak.produce_shade()
+
+    print()
+    print("=== Vegetable")
+    tomato = Vegetable("Tomato", 5.0, 10, "April")
+    tomato.show()
+    print("[make tomato grow and age for 20 days]")
+    tomato.grow(20)
+    tomato.show()
 
 
 if __name__ == "__main__":
-    print("=== Garden Plant Types ===")
-    print()
-    rose = Flower("Rose", 25, 30, "red")
-    rose.bloom()
-    print()
-    oak = Tree("Oak", 500, 1825, 50)
-    oak.produce_shade()
-    print()
-    tomato = Vegetable("Tomato", 80, 90, "summer")
-    tomato.nutritional_value()
+    main()
